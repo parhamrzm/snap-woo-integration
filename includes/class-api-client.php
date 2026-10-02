@@ -4,6 +4,67 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+/**
+ * پیدا کردن قاعده قیمت‌گذاری قابل اعمال برای یک محصول
+ */
+function snapwoo_get_applicable_pricing_rule( $product_id = 0 ) {
+    $rule = array(
+        'markup'   => (float) get_option( 'snapwoo_markup_percent', 0 ),
+        'round_to' => (int) get_option( 'snapwoo_round_to', 0 ),
+        'source'   => 'default',
+        'category' => '',
+    );
+
+    if ( ! $product_id ) {
+        return $rule;
+    }
+
+    $rules = get_option( 'snapwoo_category_rules', array() );
+    if ( ! is_array( $rules ) || empty( $rules ) ) {
+        return $rule;
+    }
+
+    $product_cats = wp_get_post_terms( $product_id, 'product_cat' );
+    if ( is_wp_error( $product_cats ) || empty( $product_cats ) ) {
+        return $rule;
+    }
+
+    $product_cat_ids = wp_list_pluck( $product_cats, 'term_id' );
+
+    foreach ( $rules as $r ) {
+        if ( empty( $r['term_id'] ) ) {
+            continue;
+        }
+        if ( in_array( (int) $r['term_id'], $product_cat_ids, true ) ) {
+            $rule['markup']   = (float) $r['markup'];
+            $rule['round_to'] = (int) $r['round_to'];
+            $rule['source']   = 'category';
+
+            $term = get_term( (int) $r['term_id'], 'product_cat' );
+            if ( $term && ! is_wp_error( $term ) ) {
+                $rule['category'] = $term->name;
+            }
+            return $rule;
+        }
+    }
+
+    return $rule;
+}
+
+/**
+ * محاسبه قیمت نهایی اسنپ‌شاپ از روی قیمت ووکامرس
+ */
+function snapwoo_calculate_snap_price( $woo_price, $product_id = 0 ) {
+    $rule  = snapwoo_get_applicable_pricing_rule( $product_id );
+    $price = $woo_price * ( 1 + $rule['markup'] / 100 );
+
+    if ( $rule['round_to'] > 0 ) {
+        $price = round( $price / $rule['round_to'] ) * $rule['round_to'];
+    }
+
+    return $price;
+}
+
 class SnapWoo_API_Client {
 
     private $api_key;

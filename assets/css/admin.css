@@ -1,0 +1,275 @@
+/* ============ تنظیمات کلی ============ */
+.snapwoo-wrap h1 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+}
+
+.snapwoo-logo {
+    display: inline-block;
+    font-size: 26px;
+}
+
+.snapwoo-subtitle {
+    color: #666;
+    margin-top: 0;
+    margin-bottom: 24px;
+    font-size: 14px;
+}
+
+/* ============ کارت‌ها ============ */
+.snapwoo-card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.snapwoo-card-header {
+    padding: 16px 24px;
+    border-bottom: 1px solid #f0f0f0;
+    background: #fafafa;
+}
+
+.snapwoo-card-header h2 {
+    margin: 0 0 4px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1d2327;
+}
+
+.snapwoo-card-desc {
+    margin: 0;
+    color: #666;
+    font-size: 13px;
+}
+
+.snapwoo-card-body {
+    padding: 12px 24px 20px;
+}
+
+.snapwoo-card-body .form-table th {
+    width: 220px;
+    padding-left: 0;
+}
+
+/* ============ بخش‌بندی داخل کارت ============ */
+.snapwoo-section-title {
+    margin: 8px 0 4px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1d2327;
+}
+
+.snapwoo-section-desc {
+    margin: 0 0 12px;
+    font-size: 12px;
+    color: #666;
+}
+
+.snapwoo-divider {
+    margin: 24px 0;
+    border: none;
+    border-top: 1px dashed #dcdcde;
+}
+
+/* ============ گروه ورودی ============ */
+.snapwoo-input-group {
+    display: inline-flex;
+    align-items: center;
+    background: #fff;
+    border: 1px solid #8c8f94;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.snapwoo-input-group input {
+    border: none !important;
+    box-shadow: none !important;
+    width: 100px;
+    padding: 6px 10px;
+    outline: none;
+}
+
+.snapwoo-input-group input:focus {
+    background: #f6f7f7;
+}
+
+.snapwoo-input-suffix {
+    padding: 0 10px;
+    background: #f0f0f1;
+    color: #555;
+    font-size: 13px;
+    border-right: 1px solid #8c8f94;
+    line-height: 30px;
+}
+
+/* ============ جدول قوانین دسته‌بندی ============ */
+.snapwoo-rules-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+    margin-bottom: 12px;
+}
+
+.snapwoo-rules-table th {
+    text-align: right;
+    font-weight: 600;
+    font-size: 13px;
+    color: #1d2327;
+    padding: 10px 8px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.snapwoo-rules-table td {
+    padding: 10px 8px;
+    border-bottom: 1px solid #f0f0f0;
+    vertical-align: middle;
+}
+
+.snapwoo-rules-table select {
+    min-width: 200px;
+    padding: 6px 8px;
+}
+
+.snapwoo-empty-row td {
+    text-align: center;
+    color: #999;
+    padding: 24px;
+    font-style: italic;
+}
+
+.snapwoo-add-wrap {
+    margin: 12px 0 0;
+}
+
+/* ============ متاباکس محصول ============ */
+.snapwoo-meta-box {
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.snapwoo-mb-section {
+    padding: 10px 0;
+    border-top: 1px solid #f0f0f0;
+}
+
+.snapwoo-mb-section:first-of-type {
+    border-top: none;
+    padding-top: 0;
+}
+
+.snapwoo-mb-section-title {
+    margin: 0 0 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #1d2327;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.snapwoo-mb-highlight {
+    background: #f0f6fc;
+    border-radius: 6px;
+    padding: 12px;
+    margin: 10px -4px;
+    border: none;
+}
+
+.snapwoo-mb-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 0;
+    gap: 8px;
+}
+
+.snapwoo-mb-label {
+    color: #666;
+    font-size: 12px;
+}
+
+.snapwoo-mb-value {
+    font-weight: 600;
+    color: #1d2327;
+    text-align: left;
+    direction: ltr;
+}
+
+.snapwoo-price {
+    color: #2271b1;
+    font-size: 14px;
+}
+
+.snapwoo-mb-meta {
+    font-size: 11px;
+    color: #888;
+    margin-top: 6px;
+    line-height: 1.4;
+}
+
+/* ============ بج‌ها ============ */
+.snapwoo-mb-badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 500;
+    margin-top: 8px;
+}
+
+.snapwoo-badge-cat {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.snapwoo-badge-default {
+    background: #f0f0f1;
+    color: #555;
+}
+
+/* ============ هشدارها ============ */
+.snapwoo-alert {
+    padding: 8px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    line-height: 1.5;
+    margin: 10px 0;
+}
+
+.snapwoo-alert-warning {
+    background: #fef8e7;
+    color: #8a6d3b;
+    border-right: 3px solid #f0b429;
+}
+
+/* ============ نتیجه همگام‌سازی ============ */
+.snapwoo-result {
+    margin-top: 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    display: none;
+}
+
+.snapwoo-result:not(:empty) {
+    display: block;
+}
+
+.snapwoo-result-success {
+    color: #0a7c2f;
+    background: #ecfdf5;
+    padding: 8px;
+    border-radius: 4px;
+    border-right: 3px solid #0a7c2f;
+}
+
+.snapwoo-result-error {
+    color: #b32d2e;
+    background: #fcf0f1;
+    padding: 8px;
+    border-radius: 4px;
+    border-right: 3px solid #b32d2e;
+}
