@@ -78,10 +78,16 @@ class SnapWoo_Admin {
             'sanitize_callback' => array( $this, 'sanitize_category_rules' ),
             'default'           => array(),
         ) );
+
+        register_setting( 'snapwoo_settings', 'snapwoo_sync_interval', array(
+            'type'              => 'number',
+            'sanitize_callback' => array( $this, 'sanitize_sync_interval' ),
+            'default'           => 60,
+        ) );
     }
 
     /**
-     * پاکسازی قوانین دسته‌بندی قبل از ذخیره
+     * پاکسازی قوانین دسته‌بندی
      */
     public function sanitize_category_rules( $value ) {
         if ( ! is_array( $value ) ) {
@@ -100,6 +106,17 @@ class SnapWoo_Admin {
             );
         }
         return $clean;
+    }
+
+    /**
+     * پاکسازی بازه زمانی کرون
+     */
+    public function sanitize_sync_interval( $value ) {
+        $value = absint( $value );
+        if ( $value < 1 ) {
+            $value = 1;
+        }
+        return $value;
     }
 
     /**
@@ -139,6 +156,8 @@ class SnapWoo_Admin {
         if ( ! is_array( $rules ) ) {
             $rules = array();
         }
+
+        $next_run = wp_next_scheduled( SNAPWOO_CRON_HOOK );
 
         ?>
         <div class="wrap snapwoo-wrap">
@@ -310,6 +329,46 @@ class SnapWoo_Admin {
                                     <p class="description">
                                         کلید به صورت امن ذخیره می‌شود و در هیچ‌کجا نمایش داده نمی‌شود.
                                     </p>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <hr class="snapwoo-divider">
+
+                        <h3 class="snapwoo-section-title">⏱️ همگام‌سازی خودکار</h3>
+                        <p class="snapwoo-section-desc">
+                            موجودی و قیمت محصولاتی که با Bulk Action به اسنپ‌شاپ ثبت شده‌اند، به‌صورت خودکار در این بازه زمانی با فروشگاه شما هماهنگ می‌شوند.
+                        </p>
+
+                        <table class="form-table">
+                            <tr>
+                                <th scope="row">
+                                    <label for="snapwoo_sync_interval">بازه اجرا</label>
+                                </th>
+                                <td>
+                                    <div class="snapwoo-input-group">
+                                        <input type="number"
+                                               id="snapwoo_sync_interval"
+                                               name="snapwoo_sync_interval"
+                                               value="<?php echo esc_attr( get_option( 'snapwoo_sync_interval', 60 ) ); ?>"
+                                               step="1"
+                                               min="1" />
+                                        <span class="snapwoo-input-suffix">دقیقه</span>
+                                    </div>
+                                    <p class="description">
+                                        حداقل ۱ دقیقه. توجه کنید که اجرای کرون وردپرس به بازدید سایت وابسته است.
+                                    </p>
+
+                                    <?php if ( $next_run ) : ?>
+                                        <p class="snapwoo-cron-info">
+                                            🕒 اجرای بعدی:
+                                            <strong><?php echo esc_html( date_i18n( 'Y/m/d H:i', $next_run ) ); ?></strong>
+                                        </p>
+                                    <?php else : ?>
+                                        <p class="snapwoo-cron-info snapwoo-cron-info-warning">
+                                            ⚠️ کرون در حال حاضر زمان‌بندی نشده است.
+                                        </p>
+                                    <?php endif; ?>
                                 </td>
                             </tr>
                         </table>

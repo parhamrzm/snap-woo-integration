@@ -12,9 +12,6 @@ class SnapWoo_Product_Meta {
         add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
     }
 
-    /**
-     * افزودن متاباکس به صفحه ویرایش محصول
-     */
     public function add_meta_box() {
         add_meta_box(
             'snapwoo_product_box',
@@ -26,9 +23,6 @@ class SnapWoo_Product_Meta {
         );
     }
 
-    /**
-     * بارگذاری اسکریپت و استایل در صفحه محصول
-     */
     public function enqueue_scripts( $hook ) {
         global $post_type;
 
@@ -60,9 +54,6 @@ class SnapWoo_Product_Meta {
         }
     }
 
-    /**
-     * نمایش محتوای متاباکس
-     */
     public function render_meta_box( $post ) {
         $product = wc_get_product( $post->ID );
 
@@ -76,6 +67,7 @@ class SnapWoo_Product_Meta {
         $snap_price_saved = get_post_meta( $post->ID, '_snapwoo_price', true );
         $snap_stock       = get_post_meta( $post->ID, '_snapwoo_stock', true );
         $last_sync        = get_post_meta( $post->ID, '_snapwoo_last_sync', true );
+        $is_registered    = (bool) get_post_meta( $post->ID, '_snapwoo_registered', true );
 
         $rule          = snapwoo_get_applicable_pricing_rule( $post->ID );
         $preview_price = snapwoo_calculate_snap_price( $woo_price, $post->ID );
@@ -94,6 +86,23 @@ class SnapWoo_Product_Meta {
                     <span class="snapwoo-mb-label">SKU</span>
                     <span class="snapwoo-mb-value"><code><?php echo esc_html( $sku ); ?></code></span>
                 </div>
+
+                <div class="snapwoo-mb-row">
+                    <span class="snapwoo-mb-label">وضعیت ثبت</span>
+                    <span class="snapwoo-mb-value">
+                        <?php if ( $is_registered ) : ?>
+                            <span class="snapwoo-mb-badge snapwoo-badge-ok">✓ ثبت‌شده</span>
+                        <?php else : ?>
+                            <span class="snapwoo-mb-badge snapwoo-badge-default">ثبت نشده</span>
+                        <?php endif; ?>
+                    </span>
+                </div>
+
+                <?php if ( $is_registered ) : ?>
+                    <p class="snapwoo-mb-meta">
+                        این محصول در همگام‌سازی خودکار شرکت می‌کند.
+                    </p>
+                <?php endif; ?>
 
                 <div class="snapwoo-mb-section">
                     <h5 class="snapwoo-mb-section-title">📦 در ووکامرس</h5>
@@ -187,9 +196,6 @@ class SnapWoo_Product_Meta {
         <?php
     }
 
-    /**
-     * پردازش AJAX همگام‌سازی تک محصول
-     */
     public function ajax_sync_single() {
         check_ajax_referer( 'snapwoo_sync', 'nonce' );
 
@@ -226,6 +232,7 @@ class SnapWoo_Product_Meta {
         update_post_meta( $product_id, '_snapwoo_price', $snap_price );
         update_post_meta( $product_id, '_snapwoo_stock', $product->get_stock_quantity() );
         update_post_meta( $product_id, '_snapwoo_last_sync', current_time( 'timestamp' ) );
+        update_post_meta( $product_id, '_snapwoo_registered', 1 );
 
         wp_send_json_success( array( 'message' => 'همگام‌سازی با موفقیت انجام شد.' ) );
     }
